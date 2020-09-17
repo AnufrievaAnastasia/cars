@@ -8,7 +8,7 @@ class Carbase:
 
     def get_photo_le_ext(self):
         point = self.photo_le_name.rfind('.')
-        return self.photo_le_name[point:len(self.photo_le_name) - 1]
+        return self.photo_le_name[point:len(self.photo_le_name)]
 
         pass
 
@@ -27,12 +27,16 @@ class Truck(Carbase):
         super().__init__(car_type, brand, photo_le_name,
                          carrying)
         self.body_whl = body_whl
-        if self.body_whl != '':
-            self.body_length = float(str(self.body_whl).split('x')[0])
-            self.body_width = float(str(self.body_whl).split('x')[1])
-            self.body_height = float(str(self.body_whl).split('x')[2])
-        else:
+        try:
+            if self.body_whl != '':
+              self.body_length = float(str(self.body_whl).split('x')[0])
+              self.body_width = float(str(self.body_whl).split('x')[1])
+              self.body_height = float(str(self.body_whl).split('x')[2])
+            else:
+              self.body_length = self.body_width = self.body_height = 0
+        except ValueError:
             self.body_length = self.body_width = self.body_height = 0
+
 
     def get_body_volume(self):
         return self.body_height * self.body_length * self.body_width
